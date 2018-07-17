@@ -36,3 +36,14 @@ def dot(a,b):
 
 def cross(a,b):
     return vector(a.y*b.z-a.z*b.y,-(a.x*b.z-a.z*b.x),a.x*b.y-a.y*b.x)
+
+def add(a,b):
+    return vector(a.x+b.x,a.y+b.y,a.z+b.z)
+
+def scalarMult(a,k):
+    return vector(k*a.x,k*a.y,k*a.z)
+
+def subtract(a,b):
+    return add(a,scalarMult(b,-1))
+
+    
