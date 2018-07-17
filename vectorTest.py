@@ -1,6 +1,6 @@
-from vector import vector
+import ThreeSpace
 
-v = vector(1,0,0)
+v = ThreeSpace.vector(1,0,0)
 print(v.x)
 print(v.y)
 print(v.z)
