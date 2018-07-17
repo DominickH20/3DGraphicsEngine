@@ -2,14 +2,14 @@ from ThreeSpace import *
 
 a = vector(1,0,0)
 b = vector(0,1,0)
-print("a = " + a)
-print("b = " + b)
+print("a = " + str(a))
+print("b = " + str(b))
 
 mag = a.mag()
-print("mag = " + mag)
+print("mag = " + str(mag))
 
 dot = dot(a,b)
-print("dot = " + dot)
+print("dot = " + str(dot))
 
 c = cross(a,b)
 d = cross(b,a)
