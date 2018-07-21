@@ -208,11 +208,15 @@ class GraphWin(tk.Canvas):
     """A GraphWin is a toplevel window for displaying graphics."""
 
     def __init__(self, title="Graphics Window",
-                 width=200, height=200, autoflush=True):
+                 width=200, height=200, fullscreen=False, autoflush=True):
         assert type(title) == type(""), "Title must be a string"
         master = tk.Toplevel(_root)
         master.protocol("WM_DELETE_WINDOW", self.close)
-        tk.Canvas.__init__(self, master, width=width, height=height,
+	if(fullscreen):
+		tk.Canvas.__init__(self, master, width=_root.winfo_screenwidth(), height=_root.winfo_screenheight(),
+                           highlightthickness=0, bd=0)
+	else:
+        	tk.Canvas.__init__(self, master, width=width, height=height,
                            highlightthickness=0, bd=0)
         self.master.title(title)
         self.pack()
@@ -223,8 +227,12 @@ class GraphWin(tk.Canvas):
         self.mouseY = None
         self.bind("<Button-1>", self._onClick)
         self.bind_all("<Key>", self._onKey)
-        self.height = int(height)
-        self.width = int(width)
+        if(fullscreen):
+		self.height = _root.winfo_screenheight()
+        	self.width = _root.winfo_screenwidth()
+	else:
+		self.height = int(height)
+        	self.width = int(width)
         self.autoflush = autoflush
         self._mouseCallback = None
         self.trans = None
