@@ -2,9 +2,13 @@ from graphics import *
 
 class engine:
 
-    def __init__(self, title, dim):
-        self.pane = GraphWin(title, dim, dim)
+    def __init__(self, title, dim, fullscreen=False):
+        self.pane = GraphWin(title, dim, dim, fullscreen)
         self.pane.setCoords(-dim/2,-dim/2,dim/2,dim/2)
+	self.fullx = self.pane.winfo_screenwidth()
+	self.fully = self.pane.winfo_screenheight()
+	if(fullscreen):	
+		self.pane.setCoords((-self.fullx)/2,(-self.fully)/2,(self.fullx)/2,(self.fully)/2)
 
     def drawPt(self,win,x,y):
         cir = Circle(Point(x,y),5)
