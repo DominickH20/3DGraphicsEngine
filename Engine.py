@@ -5,10 +5,10 @@ class engine:
     def __init__(self, title, dim, fullscreen=False):
         self.pane = GraphWin(title, dim, dim, fullscreen)
         self.pane.setCoords(-dim/2,-dim/2,dim/2,dim/2)
-	self.fullx = self.pane.winfo_screenwidth()
-	self.fully = self.pane.winfo_screenheight()
-	if(fullscreen):	
-		self.pane.setCoords((-self.fullx)/2,(-self.fully)/2,(self.fullx)/2,(self.fully)/2)
+        self.fullx = self.pane.winfo_screenwidth()
+        self.fully = self.pane.winfo_screenheight()
+        if(fullscreen):
+            self.pane.setCoords((-self.fullx)/2,(-self.fully)/2,(self.fullx)/2,(self.fully)/2)
 
     def drawPt(self,win,x,y):
         cir = Circle(Point(x,y),5)
@@ -22,7 +22,7 @@ class engine:
 
 
 def main():
-    e = engine("3DGraphicsEngine",800)
+    e = engine("3DGraphicsEngine",800,True)
     coords = []
     for i in range(0,300):
         coords.append([0,i])
