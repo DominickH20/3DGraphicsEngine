@@ -207,40 +207,37 @@ class GraphWin(tk.Canvas):
 
     """A GraphWin is a toplevel window for displaying graphics."""
 
-    def __init__(self, title="Graphics Window",
-                 width=200, height=200, fullscreen=False, autoflush=True):
+    def __init__(self, title="Graphics Window", width=200, height=200, fullscreen=False, autoflush=True):
         assert type(title) == type(""), "Title must be a string"
         master = tk.Toplevel(_root)
         master.protocol("WM_DELETE_WINDOW", self.close)
         master.geometry("+0+0")
-	if(fullscreen):
-		tk.Canvas.__init__(self, master, width=_root.winfo_screenwidth(), height=_root.winfo_screenheight(),
-                           highlightthickness=0, bd=0)
-	else:
-        	tk.Canvas.__init__(self, master, width=width, height=height,
-                           highlightthickness=0, bd=0)
-        self.master.title(title)
-        self.pack()
-        master.resizable(0,0)
-        self.foreground = "black"
-        self.items = []
-        self.mouseX = None
-        self.mouseY = None
-        self.bind("<Button-1>", self._onClick)
-        self.bind_all("<Key>", self._onKey)
         if(fullscreen):
-            self.height = _root.winfo_screenheight()
-            self.width = _root.winfo_screenwidth()
+            tk.Canvas.__init__(self, master, width=_root.winfo_screenwidth(), height=_root.winfo_screenheight(), highlightthickness=0, bd=0)
         else:
-            self.height = int(height)
-            self.width = int(width)
-        self.autoflush = autoflush
-        self._mouseCallback = None
-        self.trans = None
-        self.closed = False
-        master.lift()
-        self.lastKey = ""
-        if autoflush: _root.update()
+            tk.Canvas.__init__(self, master, width=width, height=height,highlightthickness=0, bd=0)
+            self.master.title(title)
+            self.pack()
+            master.resizable(0,0)
+            self.foreground = "black"
+            self.items = []
+            self.mouseX = None
+            self.mouseY = None
+            self.bind("<Button-1>", self._onClick)
+            self.bind_all("<Key>", self._onKey)
+            if(fullscreen):
+                self.height = _root.winfo_screenheight()
+                self.width = _root.winfo_screenwidth()
+            else:
+                self.height = int(height)
+                self.width = int(width)
+            self.autoflush = autoflush
+            self._mouseCallback = None
+            self.trans = None
+            self.closed = False
+            master.lift()
+            self.lastKey = ""
+            if autoflush: _root.update()
 
     def __repr__(self):
         if self.isClosed():
