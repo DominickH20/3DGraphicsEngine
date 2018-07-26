@@ -22,7 +22,11 @@ class engine:
 
 
 def main():
+<<<<<<< HEAD
     e = engine("3DGraphicsEngine",800,True)
+=======
+    e = engine("3DGraphicsEngine",800, True)
+>>>>>>> e9182d6ae106d51b66c71f6d768124e54ef192ba
     coords = []
     for i in range(0,300):
         coords.append([0,i])
