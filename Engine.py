@@ -130,4 +130,5 @@ def test():
     e.pane.getMouse() #holds focus of screen - click on pane to dismiss and end program
     e.pane.close()
 
-test()
+if(__name__ == "__main__"):
+    test()
