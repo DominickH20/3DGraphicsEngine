@@ -4,13 +4,16 @@ from math import *
 
 class engine:
 
+    #these must be initialized in constructor
     viewVector = vector(1,1,1)
+    yRef = vector(0,0,1)
 
     def __init__(self, title, dim, fullscreen=False):
         self.pane = GraphWin(title, dim, dim, fullscreen)
         self.pane.setCoords(-dim/2,-dim/2,dim/2,dim/2)
         self.fullx = self.pane.winfo_screenwidth()
         self.fully = self.pane.winfo_screenheight()
+        self.yRef = self.project(self.yRef)
         if(fullscreen):
             self.pane.setCoords((-self.fullx)/2,(-self.fully)/2,(self.fullx)/2,(self.fully)/2)
 
@@ -34,33 +37,44 @@ class engine:
             coords.append([0,0])
             return coords
 
-        kp = self.project(vector(0,0,1))
-        #print(kp)
-        val = dot(kp,p)/(kp.mag()*p.mag())
+        val = dot(self.yRef,p)/(self.yRef.mag()*p.mag())
         if(val > 1):#corrects domain produced by rounding error
-            #print(val)
             val = 1
         elif(val < -1):
-            #print(val)
             val=-1
         theta = acos(val)
 
-        #assign regions - limiting with kp as y axis
-        #add further region classification
-        m=(kp.y/kp.x) #ensure kp.x != 0
-        if(p.y>=m*p.x):
-            #right side
-            phi = pi/2 - theta
-        elif(p.y<m*p.x):
-            #left side
-            phi = pi/2 + theta
+        phi = self.assignRegions(self.yRef, p, theta)
 
         x = p.mag()*cos(phi)
         y = p.mag()*sin(phi)
         coords.append([x,y])
         return coords
 
-
+    def assignRegions(self, yRef, p, theta):
+        if(self.yRef.x > 0):
+            m=(self.yRef.y/self.yRef.x)
+            if(p.y>=m*p.x):
+                return pi/2 + theta
+            elif(p.y<m*p.x):
+                return pi/2 - theta
+        elif(self.yRef.x < 0):
+            m=(self.yRef.y/self.yRef.x)
+            if(p.y>=m*p.x):
+                return pi/2 - theta
+            elif(p.y<m*p.x):
+                return pi/2 + theta
+        elif(self.yRef.x == 0):
+            if(self.yRef.y >= 0):
+                if(p.x >= 0):
+                    return pi/2 - theta
+                elif(p.x < 0):
+                    return pi/2 + theta
+            elif(self.yRef < 0):
+                if(p.x >= 0):
+                    return pi/2 + theta
+                elif(p.x < 0):
+                    return pi/2 - theta
 
     def drawPt(self,win,x,y):
         cir = Circle(Point(x,y),5)
@@ -83,17 +97,17 @@ def test():
     e = engine("3DGraphicsEngine",800,True)
     coords = []
     #axes
-    for i in range(1,500):
+    for i in range(0,500):
         v = vector(0,0,i)
         p = e.project(v)
         for point in e.transform(p):
             coords.append(point)
-    for i in range(1,500):
+    for i in range(0,500):
         v = vector(0,i,0)
         p = e.project(v)
         for point in e.transform(p):
             coords.append(point)
-    for i in range(1,500):
+    for i in range(0,500):
         v = vector(i,0,0)
         p = e.project(v)
         for point in e.transform(p):
