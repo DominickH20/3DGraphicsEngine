@@ -64,21 +64,25 @@ class engine:
                     return pi/2 - theta
                 elif(p.x < 0):
                     return pi/2 + theta
-            elif(self.yRef < 0):
+            elif(self.yRef.y < 0):
                 if(p.x >= 0):
                     return pi/2 + theta
                 elif(p.x < 0):
                     return pi/2 - theta
 
-    def drawPt(self,win,x,y):
-        cir = Circle(Point(x,y),5)
-        cir.setFill("black")
+    def drawPt(self,win,x,y,color):
+        cir = Circle(Point(x,y),3)
+        cir.setFill(color)
         cir.draw(win)
 
     #will draw the selected list of [2D] points onto the pane
-    def illustrate(self,coords):
+    def illustrate(self,coords,color):
         for point in coords:
-            self.drawPt(self.pane,point[0],point[1])
+            self.drawPt(self.pane,point[0],point[1],color)
+
+
+
+
 
 def vectorGen():
     vectors = []
@@ -87,34 +91,42 @@ def vectorGen():
         vectors.append(v)
     return vectors
 
+def axes(length,engine):
+    x = []
+    y = []
+    z = []
+    #axes
+    for i in range(-length,length):
+        v = vector(0,0,i)
+        p = engine.project(v)
+        for point in engine.transform(p):
+            z.append(point)
+    for i in range(-length,length):
+        v = vector(0,i,0)
+        p = engine.project(v)
+        for point in engine.transform(p):
+            y.append(point)
+    for i in range(-length,length):
+        v = vector(i,0,0)
+        p = engine.project(v)
+        for point in engine.transform(p):
+            x.append(point)
+
+    engine.illustrate(x,"blue")
+    engine.illustrate(y,"red")
+    engine.illustrate(z,"green")
+
 def test():
     e = engine("3DGraphicsEngine",800,True)
+    axes(500,e)
     coords = []
-    #axes
-    for i in range(-500,500):
-        v = vector(0,0,i)
-        p = e.project(v)
-        for point in e.transform(p):
-            coords.append(point)
-    for i in range(-500,500):
-        v = vector(0,i,0)
-        p = e.project(v)
-        for point in e.transform(p):
-            coords.append(point)
-    for i in range(-500,500):
-        v = vector(i,0,0)
-        p = e.project(v)
-        for point in e.transform(p):
-            coords.append(point)
-
     vectors = vectorGen()
     for v in vectors:
         p = e.project(v)
         for point in e.transform(p):
             coords.append(point)
 
-
-    e.illustrate(coords)
+    e.illustrate(coords,"black")
     e.pane.getMouse() #holds focus of screen - click on pane to dismiss and end program
     e.pane.close()
 
