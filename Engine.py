@@ -3,7 +3,6 @@ from ThreeSpace import *
 from math import *
 
 class engine:
-
     #these must be initialized in constructor
     viewVector = vector(1,1,1)
     yRef = vector(0,0,1)
@@ -21,16 +20,11 @@ class engine:
     def project(self, v):
         if(v.mag()==0):
             return vector(0,0,0)
-        #be aware of when dot product returns 0
         k = -dot(self.viewVector,v)/self.viewVector.mag()**2
-        #print(k)
         n = scalarMult(self.viewVector,k)
-        #print(n)
         p = add(v,n)
-        #print(p)
         return p
 
-    #ensure magnitudes are > 0, make sure acos has proper domain
     def transform(self,p):
         coords = [] #x,y pair
         if(p.mag()==0):
@@ -97,17 +91,17 @@ def test():
     e = engine("3DGraphicsEngine",800,True)
     coords = []
     #axes
-    for i in range(0,500):
+    for i in range(-500,500):
         v = vector(0,0,i)
         p = e.project(v)
         for point in e.transform(p):
             coords.append(point)
-    for i in range(0,500):
+    for i in range(-500,500):
         v = vector(0,i,0)
         p = e.project(v)
         for point in e.transform(p):
             coords.append(point)
-    for i in range(0,500):
+    for i in range(-500,500):
         v = vector(i,0,0)
         p = e.project(v)
         for point in e.transform(p):
