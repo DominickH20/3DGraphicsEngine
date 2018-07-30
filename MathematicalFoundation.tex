@@ -75,8 +75,8 @@ is sensible. We can expect $x,y < 0$ while $z > 0$ given the orientation of $P$.
 \section{Graphing Projections}
 This section describes how we transform a projected vector, denoted by \textbf{p}, in order to display it on a two dimensional plane, referred
 to as the ``screen" in order to distinguish it from the viewing plane (a plane in three dimensions) of prior discussion.
-We will discuss a limiting but still versatile case by fixing the projection of $\textbf{k}$, the unit vector in the $z$ direction,to lie along
-the $y$ axis of our screen. We will call this projection $\textbf{k}_p$. This enables us to plot all other projections relative to $\textbf{k}_p$
+In order to do this, we must fix a vector to lie along the $y$ axis of our screen.
+We will call the projection of this vector $\textbf{y}_p$. This enables us to plot all other projections relative to $\textbf{y}_p$
 using the varying magnitudes and angles between vectors.
 \\\\
 Recall that if $\textbf{v} = \langle a,b,c \rangle$, then
@@ -92,9 +92,9 @@ Thus, we can find the angle between two vectors as follows:
 \theta = \arccos{\frac{\textbf{u} \cdot \textbf{v}}{||\textbf{u}|| ||\textbf{v}||}}
 \end{align*}
 It is important to note that this will return a $\theta \in [0,\pi]$. This leaves us unsure of which side of the screen, relative to
-$\textbf{k}_p$, an arbitrary projection \textbf{p} lies on. To clear up this ambiguity, we can do the following:
+$\textbf{y}_p$, an arbitrary projection \textbf{p} lies on. To clear up this ambiguity, we can do the following:
 \\\\
-Letting $\textbf{p} = \langle x_{0},y_{0},z_{0} \rangle$, we construct a line in the $xy$ plane on which the projection lies above
+Letting $\textbf{y}_p = \langle x_{0},y_{0},z_{0} \rangle$, we construct a line in the $xy$ plane on which the projection lies above
 \begin{align*}
 y = \frac{y_0}{x_0}x
 \end{align*}
@@ -102,16 +102,17 @@ If $x_0 < 0$ then we treat the region above the line as the ``right" side of the
 line as the ``left" side of the screen. If $x_0 = 0$, then we consider $y_0$. If $y_0 > 0$ then we assign the regions naturally, meaning that
 $x_0 > 0$ implies ``right" and $x_0 < 0$ implies ``left". If $y_0 < 0$, then we assign the regions opposite of the aforementioned assignment.
 \\\\
-Now that we can determine an arbitrary projection's orientation relative to $\textbf{k}_p$, we can plot it on the screen. Letting
-$\textbf{p} = \langle x_{0},y_{0},z_{0} \rangle$, this proceeds as follows:
+Now that we can determine an arbitrary projection's orientation relative to $\textbf{y}_p$, we can plot it on the screen. Letting
+$\textbf{p} = \langle a,b,c \rangle$ and using $\textbf{y}_p$ as before, this proceeds as follows:
 \\\\
 We compute
 \begin{align*}
-\theta = \arccos{\frac{\textbf{k}_p \cdot \textbf{p}}{||\textbf{k}_p|| ||\textbf{p}||}}\\
+\theta = \arccos{\frac{\textbf{y}_p \cdot \textbf{p}}{||\textbf{y}_p|| ||\textbf{p}||}}\\
 y = \frac{y_0}{x_0}x
 \end{align*}
-Depending on our values for $x_0,y_0$, we determine our region assignments and compute $\phi$, which will act as our polar coordinate plotting
-angle (Note that the $\pm$ below is determined by region assignment)
+Depending on our values for $x_0,y_0$, we determine our region assignments and compare $a,b$ from $\textbf{p}$ to our line. This allows us to
+place $\textbf{p}$ in the appropriate region. We then compute $\phi$, which will act as our polar coordinate plotting angle
+(Note that the $\pm$ below is determined by region assignment)
 \begin{align*}
 \phi = \frac{\pi}{2} \pm \theta
 \end{align*}
@@ -121,14 +122,4 @@ x = r\cos \phi\\
 y = r\sin \phi
 \end{align*}
 
-\section{Conclusion}
-Demonstrating the mathematics that allow the graphics engine to operate is the purpose of this document. That being said, it is important to
-acknowledge certain shortcomings of this mathematical methodology. One such shortcoming is the fact that this methodology does not support
-viewing vectors without fixing $\textbf{k}_p$ to lie along the $y$ axis of the screen. While this does still allow for plenty of rotation and
-viewing angles, it is nonetheless limiting and worth acknowledgment. Another shortcoming (albeit a potential one) is that this document does
-not currently highlight the process of dealing with edge cases that could potentially produce problems in the engine. Examples of these include
-\textbf{k} being the normal vector to the viewing plane, classification of -\textbf{k} into appropriate regions, and other miscellaneous
-cases that primarly have to do with the region selection criteria. As this project progresses, such edge cases will be investigated and resolved.
-\\\\
-Thank you for taking the time to read this document!
 \end{document}
