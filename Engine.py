@@ -16,6 +16,18 @@ class engine:
         if(fullscreen):
             self.pane.setCoords((-self.fullx)/2,(-self.fully)/2,(self.fullx)/2,(self.fully)/2)
 
+    def getViewVector(self):
+        return self.viewVector
+
+    def setViewVector(self,vec):
+        self.viewVector = vec
+
+    def getyRef(self):
+        return self.yRef
+
+    def setyRef(self,vec):
+        self.yRef = self.project(vec)
+
     #returns 3D vector projected onto viewing plane
     def project(self, v):
         if(v.mag()==0):
