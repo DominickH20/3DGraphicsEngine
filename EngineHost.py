@@ -15,6 +15,7 @@ class engineHost:
 
     def updateVector(self):
         self.eng.setViewVector(vector(cos(self.theta),sin(self.theta),sin(self.phi)))
+        self.eng.yRef = self.eng.project(vector(0,0,1)) #have this reflect the value in the engine
 
     def axes(self,length):
         x = []
