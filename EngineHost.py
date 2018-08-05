@@ -15,7 +15,7 @@ class engineHost:
 
     def updateVector(self):
         self.eng.setViewVector(vector(cos(self.theta),sin(self.theta),sin(self.phi)))
-        self.eng.yRef = self.eng.project(vector(0,0,1)) #have this reflect the value in the engine
+        self.eng.setyRef(vector(0,0,1))
 
     def axes(self,length):
         x = []
@@ -42,6 +42,19 @@ class engineHost:
         self.eng.illustrate(y,"red")
         self.eng.illustrate(z,"green")
 
+        coords = []
+        vectors = []
+        for i in range(0,500):
+            v = vector(100*cos(i/20),100*sin(i/20),i)
+            vectors.append(v)
+        for v in vectors:
+            p = self.eng.project(v)
+            for point in self.eng.transform(p):
+                coords.append(point)
+
+        self.eng.illustrate(coords,"black")
+
+
     def run(self):
         while True:
             key = self.eng.pane.checkKey()
@@ -67,7 +80,7 @@ class engineHost:
             debugmessage = "Debug: "+ "viewVector: "+ str(self.eng.viewVector) +"    "+"q to exit"+"    "+"wasd to move"
             debug = Text(Point(-400,400),debugmessage)
             debug.draw(self.eng.pane)
-            update(60)
+            update(120)
 
 def test():
     h = engineHost(pi/4,pi/4,engine("HostTest",800,True))
