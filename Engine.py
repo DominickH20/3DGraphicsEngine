@@ -85,6 +85,7 @@ class engine:
     def drawPt(self,win,x,y,color):
         cir = Circle(Point(x,y),3)
         cir.setFill(color)
+        cir.setOutline(color)
         cir.draw(win)
 
     #will draw the selected list of [2D] points onto the pane
