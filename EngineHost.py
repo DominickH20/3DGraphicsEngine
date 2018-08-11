@@ -95,6 +95,13 @@ class engineHost:
         self.wire(vertices[2], vertices[6], color)
         self.wire(vertices[3], vertices[7], color)
 
+    def renderHelix(self, vertices, color):
+        v = 0
+        while v < len(vertices)-1:
+            self.wire(vertices[v],vertices[v+1],color)
+            v+=1
+
+
     def run(self):
         hostX = self.eng.fullx
         hostY = self.eng.fully
@@ -105,7 +112,8 @@ class engineHost:
         zoom = 1
         a = axes(300)
         l = lattice(400, -100)
-        wc = wireCube(0,0,100,50, "brown")
+        h = helix(100, 0, 250, 20, 5, 10, "purple")
+        #wc = wireCube(0,0,100,50, "brown")
         while True:
             start = time.time()
             key = self.eng.pane.checkKey()
@@ -138,13 +146,15 @@ class engineHost:
             self.eng.pane.delete("all")
             self.updateVector()
             ######OBJECT TRANSFORMATIONS IF ANY######
-
+            h.updateVertices(100, 0, 250, 20, int((frame/15))+1, 10, "purple")
             ######RENDERING#######
             for obj in WorldObjects.getinstances():
                 if(isinstance(obj,lattice)):
                     self.renderLattice(obj.vertices)
                 if(isinstance(obj, wireCube)):
                     self.renderWireCube(obj.vertices, obj.color)
+                if (isinstance(obj, helix)):
+                    self.renderHelix(obj.vertices, obj.color)
                 if(isinstance(obj,axes)):
                     self.renderAxes(obj.vertices)
             ######DEBUG#######

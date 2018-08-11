@@ -1,4 +1,6 @@
 import weakref
+from math import *
+
 class WorldObjects:
     instances = set()
     def __init__(self, vertices):
@@ -15,6 +17,7 @@ class WorldObjects:
             else:
                 dead.add(ref)
         cls.instances -= dead
+
 
 class axes(WorldObjects):
     def __init__(self, size):
@@ -33,3 +36,28 @@ class wireCube(WorldObjects):
         leng = 2*size
         vertices = [[a1,a2,a3],[a1+leng,a2,a3],[a1,a2+leng,a3],[a1+leng,a2+leng,a3],[a1,a2,a3+leng],[a1+leng,a2,a3+leng],[a1,a2+leng,a3+leng],[a1+leng,a2+leng,a3+leng]]
         WorldObjects.__init__(self,vertices)
+
+class helix(WorldObjects):
+    def __init__(self, radius, start, end, incline, increment, speed, color):
+        self.color = color
+        self.radius = radius
+        self.start = start
+        self.end = end
+        self.incline = incline
+        self.increment = increment
+        self.speed = speed
+        WorldObjects.__init__(self,self.genVertices(self.radius,self.start,self.end,self.incline,self.increment, self.speed))
+
+    def genVertices(self, radius, start, end, incline, increment, speed):
+        vertices = []
+        for t in range(start,end,increment):
+            vertices.append([radius*cos(t/speed),radius*sin(t/speed),t])
+        return vertices
+
+    def updateVertices(self, radius, start, end, incline, increment, speed,color):
+        self.color = color
+        vertices = []
+        for t in range(start,end,increment):
+            vertices.append([radius*cos(t/speed),radius*sin(t/speed),t])
+        self.vertices = vertices
+
