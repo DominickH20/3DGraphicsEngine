@@ -13,11 +13,9 @@ class engine:
         self.fullx = self.pane.winfo_screenwidth()
         self.fully = self.pane.winfo_screenheight()
         self.yRef = self.project(self.yRef)
+        self.title = title
         if(fullscreen):
             self.pane.setCoords((-self.fullx)/2,(-self.fully)/2,(self.fullx)/2,(self.fully)/2)
-
-    def getViewVector(self):
-        return self.viewVector
 
     def setViewVector(self,vec):
         self.viewVector = vec

@@ -56,6 +56,9 @@ class engineHost:
 
 
     def run(self):
+        hostX = self.eng.fullx
+        hostY = self.eng.fully
+        hostName = self.eng.title
         while True:
             key = self.eng.pane.checkKey()
             if (key == "w"):
@@ -77,13 +80,15 @@ class engineHost:
                 break
             self.updateVector()
             self.axes(500)
-            debugmessage = "Debug: "+ "viewVector: "+ str(self.eng.viewVector) +"    "+"q to exit"+"    "+"wasd to move"
-            debug = Text(Point(-400,400),debugmessage)
+            #print(self.eng.fullx)
+            debugmessage = "Running" + " " + hostName + " " + "()" + " " + "\n"+"viewX: "+ format(self.eng.viewVector.x, '02f')+"\n"+"viewY: "+ format(self.eng.viewVector.y, '02f')+"\n"+"viewZ: "+ format(self.eng.viewVector.z, '02f')
+            #debugmessage = "Debug: "+ "viewVector: "+ str(self.eng.viewVector) +"    "+"q to exit"+"    "+"wasd to move"
+            debug = Text(Point(0,(-hostY)/4),debugmessage)
             debug.draw(self.eng.pane)
             update(120)
 
-def test():
-    h = engineHost(pi/4,pi/4,engine("HostTest",800,True))
+def main():
+    h = engineHost(pi/4,pi/4,engine("Host",800,True))
     h.run()
 
-test()
+main()
