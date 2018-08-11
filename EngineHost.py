@@ -81,6 +81,20 @@ class engineHost:
             self.wire([i,-size,zlevel],[i,size,zlevel],"lightblue")
             self.wire([-size, i, zlevel], [size, i, zlevel], "lightblue")
 
+    def renderWireCube(self, vertices, color):
+        self.wire(vertices[0],vertices[1], color)
+        self.wire(vertices[1], vertices[3], color)
+        self.wire(vertices[3], vertices[2], color)
+        self.wire(vertices[2], vertices[0], color)
+        self.wire(vertices[4], vertices[5], color)
+        self.wire(vertices[5], vertices[7], color)
+        self.wire(vertices[7], vertices[6], color)
+        self.wire(vertices[6], vertices[4], color)
+        self.wire(vertices[0], vertices[4], color)
+        self.wire(vertices[1], vertices[5], color)
+        self.wire(vertices[2], vertices[6], color)
+        self.wire(vertices[3], vertices[7], color)
+
     def run(self):
         hostX = self.eng.fullx
         hostY = self.eng.fully
@@ -90,6 +104,7 @@ class engineHost:
         fps = 0
         a = axes(300)
         l = lattice(400, -100)
+        wc = wireCube(0,0,0,50, "purple")
         while True:
             start = time.time()
             key = self.eng.pane.checkKey()
@@ -118,6 +133,8 @@ class engineHost:
             for obj in WorldObjects.getinstances():
                 if(isinstance(obj,lattice)):
                     self.renderLattice(obj.vertices)
+                if(isinstance(obj, wireCube)):
+                    self.renderWireCube(obj.vertices, obj.color)
                 if(isinstance(obj,axes)):
                     self.renderAxes(obj.vertices)
             ######DEBUG#######
