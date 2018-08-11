@@ -104,7 +104,7 @@ class engineHost:
         fps = 0
         a = axes(300)
         l = lattice(400, -100)
-        wc = wireCube(0,0,0,50, "purple")
+        wc = wireCube(0,0,100,50, "brown")
         while True:
             start = time.time()
             key = self.eng.pane.checkKey()
