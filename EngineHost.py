@@ -83,7 +83,7 @@ class engineHost:
             #print(self.eng.fullx)
             debugmessage = "Running" + " " + hostName + " " + "()" + " " + "\n"+"viewX: "+ format(self.eng.viewVector.x, '02f')+"\n"+"viewY: "+ format(self.eng.viewVector.y, '02f')+"\n"+"viewZ: "+ format(self.eng.viewVector.z, '02f')
             #debugmessage = "Debug: "+ "viewVector: "+ str(self.eng.viewVector) +"    "+"q to exit"+"    "+"wasd to move"
-            debug = Text(Point(0,(-hostY)/4),debugmessage)
+            debug = Text(Point((-hostX/3),(hostY)/4),debugmessage)
             debug.draw(self.eng.pane)
             update(120)
 
