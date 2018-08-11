@@ -20,3 +20,6 @@ class axes(WorldObjects):
     def __init__(self, size):
         WorldObjects.__init__(self,[[size,0,0],[0,size,0],[0,0,size],[0,0,0]])
 
+class lattice(WorldObjects):
+    def __init__(self, size, zlevel):
+        WorldObjects.__init__(self,[[size, size, zlevel],[-size, size, zlevel],[-size, -size, zlevel],[size, -size, zlevel]])

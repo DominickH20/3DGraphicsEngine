@@ -73,6 +73,14 @@ class engineHost:
         self.wire(vertices[1], vertices[3], "green")
         self.wire(vertices[2], vertices[3], "blue")
 
+    def renderLattice(self,vertices):
+        size = vertices[0][0]
+        print(size)
+        zlevel = vertices[0][2]
+        for i in range(-size,size,60):
+            self.wire([i,-size,zlevel],[i,size,zlevel],"lightblue")
+            self.wire([-size, i, zlevel], [size, i, zlevel], "lightblue")
+
     def run(self):
         hostX = self.eng.fullx
         hostY = self.eng.fully
@@ -81,6 +89,7 @@ class engineHost:
         delta = []
         fps = 0
         a = axes(300)
+        l = lattice(400, -100)
         while True:
             start = time.time()
             key = self.eng.pane.checkKey()
@@ -107,6 +116,8 @@ class engineHost:
 
             ######RENDERING#######
             for obj in WorldObjects.getinstances():
+                if(isinstance(obj,lattice)):
+                    self.renderLattice(obj.vertices)
                 if(isinstance(obj,axes)):
                     self.renderAxes(obj.vertices)
             ######DEBUG#######
