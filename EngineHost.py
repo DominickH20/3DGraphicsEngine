@@ -124,12 +124,12 @@ class engineHost:
                 self.theta += pi/64
             if (key == "k"):
                 zoom += 0.05
-                self.eng.pane.delete("all")
+                #self.eng.pane.delete("all")
                 #self.eng.pane.setCoords(((-self.fullx) / 2)*zoom, ((-self.fully) / 2)*zoom, ((self.fullx) / 2)*zoom, (self.fully) / 2)*zoom)
                 self.eng.pane.setCoords(((-hostX) / 2)*zoom, ((-hostY) / 2)*zoom, ((hostX) / 2)*zoom, ((hostY) / 2)*zoom)
             if (key == "j"):
                 zoom -= 0.05
-                self.eng.pane.delete("all")
+                #self.eng.pane.delete("all")
                 #self.eng.pane.setCoords(((-self.fullx) / 2)*zoom, ((-self.fully) / 2)*zoom, ((self.fullx) / 2)*zoom, (self.fully) / 2)*zoom)
                 self.eng.pane.setCoords(((-hostX) / 2)*zoom, ((-hostY) / 2)*zoom, ((hostX) / 2)*zoom, ((hostY) / 2)*zoom)
             if (key == "q"):
