@@ -102,6 +102,7 @@ class engineHost:
         frame = 0
         delta = []
         fps = 0
+        zoom = 1
         a = axes(300)
         l = lattice(400, -100)
         wc = wireCube(0,0,100,50, "brown")
@@ -121,7 +122,16 @@ class engineHost:
                 #self.eng.pane.delete("all")
             if (key == "d"):
                 self.theta += pi/64
-                #self.eng.pane.delete("all")
+            if (key == "k"):
+                zoom += 0.05
+                self.eng.pane.delete("all")
+                #self.eng.pane.setCoords(((-self.fullx) / 2)*zoom, ((-self.fully) / 2)*zoom, ((self.fullx) / 2)*zoom, (self.fully) / 2)*zoom)
+                self.eng.pane.setCoords(((-hostX) / 2)*zoom, ((-hostY) / 2)*zoom, ((hostX) / 2)*zoom, ((hostY) / 2)*zoom)
+            if (key == "j"):
+                zoom -= 0.05
+                self.eng.pane.delete("all")
+                #self.eng.pane.setCoords(((-self.fullx) / 2)*zoom, ((-self.fully) / 2)*zoom, ((self.fullx) / 2)*zoom, (self.fully) / 2)*zoom)
+                self.eng.pane.setCoords(((-hostX) / 2)*zoom, ((-hostY) / 2)*zoom, ((hostX) / 2)*zoom, ((hostY) / 2)*zoom)
             if (key == "q"):
                 self.eng.pane.close()
                 break
@@ -138,7 +148,7 @@ class engineHost:
                 if(isinstance(obj,axes)):
                     self.renderAxes(obj.vertices)
             ######DEBUG#######
-            debugmessage = "Running" + " " + hostName + " " + "(" + format(fps, '03f')+ " fps" + ")" + " " + "\n"+"viewX: "+ format(self.eng.viewVector.x, '02f')+"\n"+"viewY: "+ format(self.eng.viewVector.y, '02f')+"\n"+"viewZ: "+ format(self.eng.viewVector.z, '02f')
+            debugmessage = "Running" + " " + hostName + " " + "(" + format(fps, '03f')+ " fps" + ")" + " " + "\n"+"viewX: "+ format(self.eng.viewVector.x, '02f')+"\n"+"viewY: "+ format(self.eng.viewVector.y, '02f')+"\n"+"viewZ: "+ format(self.eng.viewVector.z, '02f')+"\n"+"Magnification: "+format(1/zoom, '02f')
             #debugmessage = "Debug: "+ "viewVector: "+ str(self.eng.viewVector) +"    "+"q to exit"+"    "+"wasd to move"
             debug = Text(Point((-hostX/3),(hostY)/4),debugmessage)
             debug.draw(self.eng.pane)
