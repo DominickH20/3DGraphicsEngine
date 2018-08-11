@@ -69,24 +69,22 @@ class engineHost:
             if (key == "w"):
                 if(self.phi < pi/2):
                     self.phi += pi/64
-                self.eng.pane.delete("all")
+                #self.eng.pane.delete("all")
             if (key == "a"):
                 self.theta -= pi/64
-                self.eng.pane.delete("all")
+                #self.eng.pane.delete("all")
             if (key == "s"):
                 if(self.phi > -pi/2):
                     self.phi -= pi/64
-                self.eng.pane.delete("all")
+                #self.eng.pane.delete("all")
             if (key == "d"):
                 self.theta += pi/64
-                self.eng.pane.delete("all")
+                #self.eng.pane.delete("all")
             if (key == "q"):
                 self.eng.pane.close()
                 break
+            self.eng.pane.delete("all")
             self.updateVector()
-            self.axes(500)
-            #self.eng.pane.delete("all")
-            #print(self.eng.fullx)
             debugmessage = "Running" + " " + hostName + " " + "(" + format(fps, '03f')+ " fps" + ")" + " " + "\n"+"viewX: "+ format(self.eng.viewVector.x, '02f')+"\n"+"viewY: "+ format(self.eng.viewVector.y, '02f')+"\n"+"viewZ: "+ format(self.eng.viewVector.z, '02f')
             #debugmessage = "Debug: "+ "viewVector: "+ str(self.eng.viewVector) +"    "+"q to exit"+"    "+"wasd to move"
             debug = Text(Point((-hostX/3),(hostY)/4),debugmessage)

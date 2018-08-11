@@ -86,7 +86,7 @@ class engine:
         cir.setOutline(color)
         cir.draw(win)
 
-    def drawLine(self,x1,y1,x2,y2, color = "black"):
+    def drawLine(self,x1,y1,x2,y2, color):
         line = Line(Point(x1,y1),Point(x2,y2), color)
         line.draw(self.pane)
 
