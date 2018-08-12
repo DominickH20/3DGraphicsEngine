@@ -15,10 +15,10 @@ class engineHost:
         self.phi = phi
         self.eng = eng
 
-
+    #updates the the engine projection vectors based on input data from host
     def updateVector(self):
         self.eng.setViewVector(vector(cos(self.theta),sin(self.theta),sin(self.phi)))
-        self.eng.setyRef(vector(0,0,1))
+        self.eng.setyRef(vector(0,0,1)) #no use yet - revolution is not implemented
 
     #retrieves appropriate drawing coordinates from a specified point in R3
     def getPoint(self, point):
@@ -64,7 +64,7 @@ class engineHost:
             self.wire(vertices[v],vertices[v+1],color)
             v+=1
 
-
+    #core loop that produces rendering and takes user input
     def run(self):
         hostX = self.eng.fullx
         hostY = self.eng.fully

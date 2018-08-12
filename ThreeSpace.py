@@ -1,5 +1,6 @@
 import math
 
+#representation of a vector in R3
 class vector:
     def __init__(self,x,y,z):
         self.x = x
@@ -31,6 +32,7 @@ class vector:
         return "("+str(self.x)+","+str(self.y)+","+str(self.z)+")"
 
 
+#set of operations in R3 that are useful for the purposes of this project
 def dot(a,b):
     return a.x*b.x + a.y*b.y + a.z*b.z
 
@@ -45,5 +47,3 @@ def scalarMult(a,k):
 
 def subtract(a,b):
     return add(a,scalarMult(b,-1))
-
-    
