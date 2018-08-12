@@ -64,7 +64,7 @@ class engineHost:
 
     def renderLattice(self,vertices):
         size = vertices[0][0]
-        print(size)
+        #print(size)
         zlevel = vertices[0][2]
         for i in range(-size,size,60):
             self.wire([i,-size,zlevel],[i,size,zlevel],"lightblue")
@@ -110,7 +110,7 @@ class engineHost:
             if (key == "q"):
                 self.eng.pane.close()
                 break
-                
+
             self.eng.pane.delete("all")
             self.updateVector()
             ######OBJECT TRANSFORMATIONS IF ANY######
