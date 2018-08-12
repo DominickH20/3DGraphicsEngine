@@ -86,6 +86,7 @@ class engineHost:
 
             self.eng.pane.delete("all")
             self.axes(500)
+
             debugmessage = "Running" + " " + hostName + " " + "(" + format(fps, '03f')+ " fps" + ")" + " " + "\n"+"viewX: "+ format(self.eng.viewVector.x, '02f')+"\n"+"viewY: "+format(self.eng.viewVector.y, '02f')+"\n"+"viewZ: "+ format(self.eng.viewVector.z, '02f')
             debug = Text(Point((-hostX/3),(hostY)/4),debugmessage)
             debug.draw(self.eng.pane)
