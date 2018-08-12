@@ -17,6 +17,9 @@ class engine:
         if(fullscreen):
             self.pane.setCoords((-self.fullx)/2,(-self.fully)/2,(self.fullx)/2,(self.fully)/2)
 
+    def getviewVector(self):
+        return self.viewVector
+
     def setViewVector(self,vec):
         self.viewVector = vec
 

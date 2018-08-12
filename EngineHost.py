@@ -43,18 +43,17 @@ class engineHost:
         self.eng.illustrate(y,"red")
         self.eng.illustrate(z,"green")
 
-        coords = []
-        vectors = []
-        for i in range(0,500):
-            v = vector(100*cos(i/20),100*sin(i/20),i)
-            vectors.append(v)
-        for v in vectors:
-            p = self.eng.project(v)
-            for point in self.eng.transform(p):
-                coords.append(point)
-
-        self.eng.illustrate(coords,"black")
-
+        #coords = []
+        #vectors = []
+        #for i in range(0,500):
+        #    v = vector(100*cos(i/20),100*sin(i/20),i)
+        #    vectors.append(v)
+        #for v in vectors:
+        #    p = self.eng.project(v)
+        #    for point in self.eng.transform(p):
+        #        coords.append(point)
+        #
+        #self.eng.illustrate(coords,"black")
 
     def run(self):
         hostX = self.eng.fullx
@@ -84,14 +83,15 @@ class engineHost:
                 self.eng.pane.close()
                 break
             self.updateVector()
+
+            self.eng.pane.delete("all")
             self.axes(500)
-            #self.eng.pane.delete("all")
-            #print(self.eng.fullx)
-            debugmessage = "Running" + " " + hostName + " " + "(" + format(fps, '03f')+ " fps" + ")" + " " + "\n"+"viewX: "+ format(self.eng.viewVector.x, '02f')+"\n"+"viewY: "+ format(self.eng.viewVector.y, '02f')+"\n"+"viewZ: "+ format(self.eng.viewVector.z, '02f')
-            #debugmessage = "Debug: "+ "viewVector: "+ str(self.eng.viewVector) +"    "+"q to exit"+"    "+"wasd to move"
+
+            debugmessage = "Running" + " " + hostName + " " + "(" + format(fps, '03f')+ " fps" + ")" + " " + "\n"+"viewX: "+ format(self.eng.viewVector.x, '02f')+"\n"+"viewY: "+format(self.eng.viewVector.y, '02f')+"\n"+"viewZ: "+ format(self.eng.viewVector.z, '02f')
             debug = Text(Point((-hostX/3),(hostY)/4),debugmessage)
             debug.draw(self.eng.pane)
             update(120)
+            
             frame +=1
             end = time.time()
             diff = end-start
