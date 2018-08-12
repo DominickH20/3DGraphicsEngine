@@ -20,42 +20,16 @@ class engineHost:
         self.eng.setViewVector(vector(cos(self.theta),sin(self.theta),sin(self.phi)))
         self.eng.setyRef(vector(0,0,1))
 
-    def axes(self,length):
-        x = []
-        y = []
-        z = []
-        #axes
-        for i in range(-length,length):
-            v = vector(0,0,i)
-            p = self.eng.project(v)
-            for point in self.eng.transform(p):
-                z.append(point)
-        for i in range(-length,length):
-            v = vector(0,i,0)
-            p = self.eng.project(v)
-            for point in self.eng.transform(p):
-                y.append(point)
-        for i in range(-length,length):
-            v = vector(i,0,0)
-            p = self.eng.project(v)
-            for point in self.eng.transform(p):
-                x.append(point)
-
-        self.eng.illustrate(x,"blue")
-        self.eng.illustrate(y,"red")
-        self.eng.illustrate(z,"green")
-
-    def getPoint(self, coords): ##R3 to R2
-        r = []
-        v = vector(coords[0],coords[1],coords[2])
+    #retrieves appropriate drawing coordinates from a specified point in R3
+    def getPoint(self, point):
+        v = vector(point[0],point[1],point[2])
         p = self.eng.project(v)
-        for point in self.eng.transform(p):
-            r.append(point)
-        #print(r)
-        return r[0]
+        r = self.eng.transform(p)
+        return r
 
-    def wire(self,a1,a2, color):
-        self.eng.drawLine(self.getPoint(a1)[0],self.getPoint(a1)[1],self.getPoint(a2)[0],self.getPoint(a2)[1], color)
+    #draws line between two given points p1 and p2
+    def wire(self,p1,p2,color):
+        self.eng.drawLine(self.getPoint(p1)[0],self.getPoint(p1)[1],self.getPoint(p2)[0],self.getPoint(p2)[1], color)
 
     def renderAxes(self,vertices):
         self.wire(vertices[0],vertices[3],"red")

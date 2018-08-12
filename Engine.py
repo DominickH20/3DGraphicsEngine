@@ -38,16 +38,19 @@ class engine:
         p = add(v,n)
         return p
 
+    #returns a pair x,y of points representing a projected vector's position on the screen
+    #the returned list has x=list[0] and y = list[1]
     def transform(self,p):
-        coords = [] #x,y pair
+        pair = [] #x,y pair
         if(p.mag()==0):
-            coords.append([0,0])
-            return coords
+            pair.append(0)
+            pair.append(0)
+            return pair
 
         val = dot(self.yRef,p)/(self.yRef.mag()*p.mag())
         if(val > 1):#corrects domain produced by rounding error
             val = 1
-        elif(val < -1):
+        elif(val < -1):#analogous correction
             val=-1
         theta = acos(val)
 
@@ -55,9 +58,11 @@ class engine:
 
         x = p.mag()*cos(phi)
         y = p.mag()*sin(phi)
-        coords.append([x,y])
-        return coords
+        pair.append(x)
+        pair.append(y)
+        return pair
 
+    #determines on which side of the window to display points
     def assignRegions(self, yRef, p, theta):
         if(self.yRef.x > 0):
             m=(self.yRef.y/self.yRef.x)
@@ -83,18 +88,20 @@ class engine:
                 elif(p.x < 0):
                     return pi/2 - theta
 
+    #POOR PERFORMANCE - DO NOT USE
     def drawPt(self,win,x,y,color):
         cir = Circle(Point(x,y),3)
         cir.setFill(color)
         cir.setOutline(color)
         cir.draw(win)
 
+    #draws a line connecting two points on the viewing plane
     def drawLine(self,x1,y1,x2,y2, color):
         line = Line(Point(x1,y1),Point(x2,y2), color)
         line.draw(self.pane)
 
+    #POOR PERFORMANCE - DO NOT USE
     #will draw the selected list of [2D] points onto the pane
     def illustrate(self,coords,color):
         for point in coords:
             self.drawPt(self.pane,point[0],point[1],color)
-
