@@ -91,9 +91,10 @@ class engineHost:
         frame = 0
         delta = []
         fps = 0
+        zoom = 1
         a = axes(300)
         l = lattice(400, -100)
-        wc = wireCube(0,0,0,50, "purple")
+        wc = wireCube(0,0,100,50, "brown")
         while True:
             start = time.time()
             key = self.eng.pane.checkKey()
@@ -107,6 +108,12 @@ class engineHost:
                     self.phi -= pi/64
             if (key == "d"):
                 self.theta += pi/64
+            if (key == "k"):
+                zoom += 0.05
+                self.eng.pane.setCoords(((-hostX) / 2)*zoom, ((-hostY) / 2)*zoom, ((hostX) / 2)*zoom, ((hostY) / 2)*zoom)
+            if (key == "j"):
+                zoom -= 0.05
+                self.eng.pane.setCoords(((-hostX) / 2)*zoom, ((-hostY) / 2)*zoom, ((hostX) / 2)*zoom, ((hostY) / 2)*zoom)
             if (key == "q"):
                 self.eng.pane.close()
                 break
