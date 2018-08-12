@@ -668,10 +668,10 @@ class Circle(Oval):
 
 class Line(_BBox):
 
-    def __init__(self, p1, p2):
+    def __init__(self, p1, p2, color = "black"):
         _BBox.__init__(self, p1, p2, ["arrow","fill","width"])
-        self.setFill(DEFAULT_CONFIG['outline'])
-        self.setOutline = self.setFill
+        self.setFill(color)
+        #self.setOutline = color
 
     def __repr__(self):
         return "Line({}, {})".format(str(self.p1), str(self.p2))
