@@ -91,7 +91,7 @@ class engineHost:
             debug = Text(Point((-hostX/3),(hostY)/4),debugmessage)
             debug.draw(self.eng.pane)
             update(120)
-            
+
             frame +=1
             end = time.time()
             diff = end-start
