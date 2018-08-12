@@ -64,22 +64,12 @@ class engineHost:
             self.wire(vertices[v],vertices[v+1],color)
             v+=1
 
-    #core loop that produces rendering and takes user input
-    def run(self):
-        hostX = self.eng.fullx
-        hostY = self.eng.fully
-        hostName = self.eng.title
-        frame = 0
-        delta = []
-        fps = 0
-        zoom = 1
-        a = axes(300)
-        l = lattice(400, -100)
-        h = helix(100, 0, 250, 20, 5, 10, "purple")
-        #wc = wireCube(0,0,100,50, "brown")
-        while True:
-            start = time.time()
-            key = self.eng.pane.checkKey()
+    #handles value assignment when keys are pressed. T/F indicates when to break out of loop
+    def handleKeys(self,key):
+        if (key == "q"):
+            self.eng.pane.close()
+            return True
+        else:
             if (key == "w"):
                 if(self.phi < pi/2):
                     self.phi += pi/64
@@ -96,29 +86,63 @@ class engineHost:
             if (key == "j"):
                 zoom -= 0.05
                 self.eng.pane.setCoords(((-hostX) / 2)*zoom, ((-hostY) / 2)*zoom, ((hostX) / 2)*zoom, ((hostY) / 2)*zoom)
-            if (key == "q"):
-                self.eng.pane.close()
-                break
+            return False
+
+    #method to handle object rendering - ALL RENDERING MUST BE DONE HERE
+    #ideally we want to remove frame as an input for this method
+    def render(self,frame):
+        a = axes(300)
+        l = lattice(400, -100)
+        h = helix(100, 0, 250, 20, 5, 10, "purple")
+        wc = wireCube(0,0,100,50, "brown")
+
+        ######OBJECT TRANSFORMATIONS IF ANY######
+        h.updateVertices(100, 0, 250, 20, int((frame/15))+1, 10, "purple")
+        ######RENDERING#######
+        for obj in WorldObjects.getinstances():
+            if(isinstance(obj,lattice)):
+                self.renderLattice(obj.vertices)
+            if(isinstance(obj, wireCube)):
+                self.renderWireCube(obj.vertices, obj.color)
+            if (isinstance(obj, helix)):
+                self.renderHelix(obj.vertices, obj.color)
+            if(isinstance(obj,axes)):
+                self.renderAxes(obj.vertices)
+
+    #method to handle debug message view - ideally want to decrease number of vars in function
+    def printDebug(self,fps,hostX,hostY,hostName):
+        ######DEBUG#######
+        debugmessage = "Running" + " " + hostName + " "
+        debugmessage += "(" + format(fps, '03f')+ " fps" + ")"
+        debugmessage += " " + "\n"+"viewX: "+ format(self.eng.viewVector.getX(), '02f')
+        debugmessage += " " + "\n"+"viewY: "+ format(self.eng.viewVector.getY(), '02f')
+        debugmessage += " " + "\n"+"viewZ: "+ format(self.eng.viewVector.getZ(), '02f')
+
+
+        debug = Text(Point((-hostX/3),(hostY)/4),debugmessage)
+        debug.draw(self.eng.pane)
+
+
+    #core loop that produces rendering and takes user input
+    #want to remove local variables and handle fps better - this should be a clean function
+    def run(self):
+        hostX = self.eng.fullx
+        hostY = self.eng.fully
+        hostName = self.eng.title
+        frame = 0
+        delta = []
+        fps = 0
+        zoom = 1
+
+        while True:
+            start = time.time()
+            if(self.handleKeys(self.eng.pane.checkKey())):
+                break;
 
             self.eng.pane.delete("all")
             self.updateVector()
-            ######OBJECT TRANSFORMATIONS IF ANY######
-            h.updateVertices(100, 0, 250, 20, int((frame/15))+1, 10, "purple")
-            ######RENDERING#######
-            for obj in WorldObjects.getinstances():
-                if(isinstance(obj,lattice)):
-                    self.renderLattice(obj.vertices)
-                if(isinstance(obj, wireCube)):
-                    self.renderWireCube(obj.vertices, obj.color)
-                if (isinstance(obj, helix)):
-                    self.renderHelix(obj.vertices, obj.color)
-                if(isinstance(obj,axes)):
-                    self.renderAxes(obj.vertices)
-            ######DEBUG#######
-            debugmessage = "Running" + " " + hostName + " " + "(" + format(fps, '03f')+ " fps" + ")" + " " + "\n"+"viewX: "+ format(self.eng.viewVector.x, '02f')+"\n"+"viewY: "+ format(self.eng.viewVector.y, '02f')+"\n"+"viewZ: "+ format(self.eng.viewVector.z, '02f')
-
-            debug = Text(Point((-hostX/3),(hostY)/4),debugmessage)
-            debug.draw(self.eng.pane)
+            self.render(frame)
+            self.printDebug(fps,hostX,hostY,hostName)
             update(120)
 
             frame +=1
