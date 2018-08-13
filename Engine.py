@@ -59,61 +59,37 @@ class engine:
 
         x = p.mag()*cos(phi)
         y = p.mag()*sin(phi)
+        if(self.viewVector.z<0):#reflection bug fix
+            x = -x
         pair.append(x)
         pair.append(y)
         return pair
 
     #determines on which side of the window to display points
     def assignRegions(self, p, theta):
-        if(self.viewVector.getZ() >=0):
-            if(self.yRef.x > 0):
-                m=(self.yRef.y/self.yRef.x)
-                if(p.y>=m*p.x):
-                    return pi/2 + theta
-                elif(p.y<m*p.x):
-                    return pi/2 - theta
-            elif(self.yRef.x < 0):
-                m=(self.yRef.y/self.yRef.x)
-                if(p.y>=m*p.x):
-                    return pi/2 - theta
-                elif(p.y<m*p.x):
-                    return pi/2 + theta
-            elif(self.yRef.x == 0):
-                if(self.yRef.y >= 0):
-                    if(p.x >= 0):
-                        return pi/2 - theta
-                    elif(p.x < 0):
-                        return pi/2 + theta
-                elif(self.yRef.y < 0):
-                    if(p.x >= 0):
-                        return pi/2 + theta
-                    elif(p.x < 0):
-                        return pi/2 - theta
-        else: #invert +/-
-            if(self.yRef.x > 0):
-                m=(self.yRef.y/self.yRef.x)
-                if(p.y>=m*p.x):
-                    return pi/2 - theta
-                elif(p.y<m*p.x):
-                    return pi/2 + theta
-            elif(self.yRef.x < 0):
-                m=(self.yRef.y/self.yRef.x)
-                if(p.y>=m*p.x):
-                    return pi/2 + theta
-                elif(p.y<m*p.x):
-                    return pi/2 - theta
-            elif(self.yRef.x == 0):
-                if(self.yRef.y >= 0):
-                    if(p.x >= 0):
-                        return pi/2 + theta
-                    elif(p.x < 0):
-                        return pi/2 - theta
-                elif(self.yRef.y < 0):
-                    if(p.x >= 0):
-                        return pi/2 - theta
-                    elif(p.x < 0):
-                        return pi/2 + theta
-
+        if (self.yRef.x > 0):
+            m = (self.yRef.y / self.yRef.x)
+            if (p.y >= m * p.x):
+                return pi / 2 + theta
+            elif (p.y < m * p.x):
+                return pi / 2 - theta
+        elif (self.yRef.x < 0):
+            m = (self.yRef.y / self.yRef.x)
+            if (p.y >= m * p.x):
+                return pi / 2 - theta
+            elif (p.y < m * p.x):
+                return pi / 2 + theta
+        elif (self.yRef.x == 0):
+            if (self.yRef.y >= 0):
+                if (p.x >= 0):
+                    return pi / 2 - theta
+                elif (p.x < 0):
+                    return pi / 2 + theta
+            elif (self.yRef.y < 0):
+                if (p.x >= 0):
+                    return pi / 2 + theta
+                elif (p.x < 0):
+                    return pi / 2 - theta
 
     #POOR PERFORMANCE - DO NOT USE
     def drawPt(self,win,x,y,color):
