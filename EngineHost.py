@@ -66,6 +66,8 @@ class engineHost:
 
     #handles value assignment when keys are pressed. T/F indicates when to break out of loop
     def handleKeys(self,key):
+        hostX = self.eng.fullx
+        hostY = self.eng.fully
         if (key == "q"):
             self.eng.pane.close()
             return True
@@ -110,7 +112,10 @@ class engineHost:
                 self.renderAxes(obj.vertices)
 
     #method to handle debug message view - ideally want to decrease number of vars in function
-    def printDebug(self,fps,hostX,hostY,hostName):
+    def printDebug(self,fps):
+        hostX = self.eng.fullx
+        hostY = self.eng.fully
+        hostName = self.eng.title
         ######DEBUG#######
         debugmessage = "Running" + " " + hostName + " "
         debugmessage += "(" + format(fps, '03f')+ " fps" + ")"
@@ -126,9 +131,6 @@ class engineHost:
     #core loop that produces rendering and takes user input
     #want to remove local variables and handle fps better - this should be a clean function
     def run(self):
-        hostX = self.eng.fullx
-        hostY = self.eng.fully
-        hostName = self.eng.title
         frame = 0
         delta = []
         fps = 0
@@ -142,7 +144,7 @@ class engineHost:
             self.eng.pane.delete("all")
             self.updateVector()
             self.render(frame)
-            self.printDebug(fps,hostX,hostY,hostName)
+            self.printDebug(fps)
             update(120)
 
             frame +=1
