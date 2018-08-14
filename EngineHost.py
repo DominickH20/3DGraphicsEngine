@@ -86,6 +86,14 @@ class engineHost:
                 self.eng.zoomIn()
             if (key == "x"):
                 self.eng.zoomOut()
+            if (key == "j"):
+                self.eng.traverseLeft()
+            if (key == "l"):
+                self.eng.traverseRight()
+            if (key == "i"):
+                self.eng.traverseUp()
+            if (key == "k"):
+                self.eng.traverseDown()
             return False
 
     #method to handle object rendering - ALL RENDERING MUST BE DONE HERE
@@ -121,7 +129,8 @@ class engineHost:
         debugmessage += " " + "\n"+"viewY: "+ format(self.eng.viewVector.getY(), '02f')
         debugmessage += " " + "\n"+"viewZ: "+ format(self.eng.viewVector.getZ(), '02f')
         debugmessage += " " + "\n"+"Magnification (z/x): " + format(self.eng.getZoom(),'02f')
-
+        debugmessage += " " + "\n"+"xTraversal (j/l): " + format(self.eng.getxTraversal(),'05d')
+        debugmessage += " " + "\n" + "yTraversal (i/k): " + format(self.eng.getyTraversal(), '05d')
 
         debug = Text(Point((-hostX/3),(hostY)/4),debugmessage)
         debug.draw(self.eng.pane)

@@ -21,7 +21,7 @@ class WorldObjects:
 
 class axes(WorldObjects):
     def __init__(self, size):
-        WorldObjects.__init__(self,[[size,0,0],[0,size,0],[0,0,size],[0,0,0]])
+        WorldObjects.__init__(self,[[size,0,0],[0,size,0],[0,0,size],[0.001,0.001,0.001]]) #Offset from origin for projection
 
 class lattice(WorldObjects):
     def __init__(self, size, zlevel):
