@@ -38,8 +38,8 @@ class engine:
     def zoomOut(self):
         self.zoom -= 0.01
 
-    def getMagnification(self):
-        return 1/self.zoom
+    def getZoom(self):
+        return self.zoom
 
     #returns 3D vector projected onto viewing plane
     def project(self, v):

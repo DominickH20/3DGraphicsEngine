@@ -120,6 +120,7 @@ class engineHost:
         debugmessage += " " + "\n"+"viewX: "+ format(self.eng.viewVector.getX(), '02f')
         debugmessage += " " + "\n"+"viewY: "+ format(self.eng.viewVector.getY(), '02f')
         debugmessage += " " + "\n"+"viewZ: "+ format(self.eng.viewVector.getZ(), '02f')
+        debugmessage += " " + "\n"+"Magnification (z/x): " + format(self.eng.getZoom(),'02f')
 
 
         debug = Text(Point((-hostX/3),(hostY)/4),debugmessage)
