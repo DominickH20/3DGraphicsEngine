@@ -6,6 +6,7 @@ class engine:
     #these must be initialized in constructor
     viewVector = vector(1,1,1)
     yRef = vector(0,0,1)
+    zoom = 1
 
     def __init__(self, title, dim, fullscreen=False):
         self.pane = GraphWin(title, dim, dim, fullscreen)
@@ -29,6 +30,16 @@ class engine:
 
     def setyRef(self,vec):
         self.yRef = self.project(vec)
+
+    #view magnification
+    def zoomIn(self):
+        self.zoom += 0.01
+
+    def zoomOut(self):
+        self.zoom -= 0.01
+
+    def getMagnification(self):
+        return 1/self.zoom
 
     #returns 3D vector projected onto viewing plane
     def project(self, v):
@@ -57,8 +68,8 @@ class engine:
 
         phi = self.assignRegions(p, theta)
 
-        x = p.mag()*cos(phi)
-        y = p.mag()*sin(phi)
+        x = p.mag()*cos(phi)*self.zoom
+        y = p.mag()*sin(phi)*self.zoom
         if(self.viewVector.z<0):#reflection bug fix
             x = -x
         pair.append(x)

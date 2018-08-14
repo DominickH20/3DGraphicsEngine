@@ -82,12 +82,10 @@ class engineHost:
                     self.phi -= pi/64
             if (key == "d"):
                 self.theta += pi/64
-            if (key == "k"):
-                zoom += 0.05
-                self.eng.pane.setCoords(((-hostX) / 2)*zoom, ((-hostY) / 2)*zoom, ((hostX) / 2)*zoom, ((hostY) / 2)*zoom)
-            if (key == "j"):
-                zoom -= 0.05
-                self.eng.pane.setCoords(((-hostX) / 2)*zoom, ((-hostY) / 2)*zoom, ((hostX) / 2)*zoom, ((hostY) / 2)*zoom)
+            if (key == "z"):
+                self.eng.zoomIn()
+            if (key == "x"):
+                self.eng.zoomOut()
             return False
 
     #method to handle object rendering - ALL RENDERING MUST BE DONE HERE
