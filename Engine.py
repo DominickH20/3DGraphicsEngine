@@ -6,6 +6,9 @@ class engine:
     #these must be initialized in constructor
     viewVector = vector(1,1,1)
     yRef = vector(0,0,1)
+    zoom = 1
+    xTraversal = 0
+    yTraversal = 0
 
     def __init__(self, title, dim, fullscreen=False):
         self.pane = GraphWin(title, dim, dim, fullscreen)
@@ -30,6 +33,36 @@ class engine:
     def setyRef(self,vec):
         self.yRef = self.project(vec)
 
+    #view magnification
+    def zoomIn(self):
+        self.zoom += 0.01
+
+    def zoomOut(self):
+        self.zoom -= 0.01
+
+    def getZoom(self):
+        return self.zoom
+
+    #Linear camera tracking
+
+    def traverseLeft(self):
+        self.xTraversal -= 5
+
+    def traverseRight(self):
+        self.xTraversal += 5
+
+    def traverseUp(self):
+        self.yTraversal += 5
+
+    def traverseDown(self):
+        self.yTraversal -= 5
+
+    def getxTraversal(self):
+        return self.xTraversal
+
+    def getyTraversal(self):
+        return self.yTraversal
+
     #returns 3D vector projected onto viewing plane
     def project(self, v):
         if(v.mag()==0):
@@ -44,8 +77,10 @@ class engine:
     def transform(self,p):
         pair = [] #x,y pair
         if(p.mag()==0):
-            pair.append(0)
-            pair.append(0)
+            x=0 + self.xTraversal
+            y=0 + self.yTraversal
+            pair.append(x)
+            pair.append(y)
             return pair
 
         val = dot(self.yRef,p)/(self.yRef.mag()*p.mag())
@@ -57,10 +92,11 @@ class engine:
 
         phi = self.assignRegions(p, theta)
 
-        x = p.mag()*cos(phi)
-        y = p.mag()*sin(phi)
+        x = p.mag()*cos(phi)*self.zoom + self.xTraversal
+        y = p.mag()*sin(phi)*self.zoom + self.yTraversal
+
         if(self.viewVector.z<0):#reflection bug fix
-            x = -x
+            x = -x + self.xTraversal*2 #Displace to account for negative z after traversal
         pair.append(x)
         pair.append(y)
         return pair

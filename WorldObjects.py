@@ -21,7 +21,7 @@ class WorldObjects:
 
 class axes(WorldObjects):
     def __init__(self, size):
-        WorldObjects.__init__(self,[[size,0,0],[0,size,0],[0,0,size],[0,0,0]])
+        WorldObjects.__init__(self,[[size,0,0],[0,size,0],[0,0,size],[0,0,0]]) #Offset from origin for projection
 
 class lattice(WorldObjects):
     def __init__(self, size, zlevel):
@@ -60,4 +60,3 @@ class helix(WorldObjects):
         for t in range(start,end,increment):
             vertices.append([radius*cos(t/speed),radius*sin(t/speed),t])
         self.vertices = vertices
-

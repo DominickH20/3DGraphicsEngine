@@ -82,12 +82,18 @@ class engineHost:
                     self.phi -= pi/64
             if (key == "d"):
                 self.theta += pi/64
-            if (key == "k"):
-                zoom += 0.05
-                self.eng.pane.setCoords(((-hostX) / 2)*zoom, ((-hostY) / 2)*zoom, ((hostX) / 2)*zoom, ((hostY) / 2)*zoom)
+            if (key == "z"):
+                self.eng.zoomIn()
+            if (key == "x"):
+                self.eng.zoomOut()
             if (key == "j"):
-                zoom -= 0.05
-                self.eng.pane.setCoords(((-hostX) / 2)*zoom, ((-hostY) / 2)*zoom, ((hostX) / 2)*zoom, ((hostY) / 2)*zoom)
+                self.eng.traverseLeft()
+            if (key == "l"):
+                self.eng.traverseRight()
+            if (key == "i"):
+                self.eng.traverseUp()
+            if (key == "k"):
+                self.eng.traverseDown()
             return False
 
     #method to handle object rendering - ALL RENDERING MUST BE DONE HERE
@@ -122,7 +128,9 @@ class engineHost:
         debugmessage += " " + "\n"+"viewX: "+ format(self.eng.viewVector.getX(), '02f')
         debugmessage += " " + "\n"+"viewY: "+ format(self.eng.viewVector.getY(), '02f')
         debugmessage += " " + "\n"+"viewZ: "+ format(self.eng.viewVector.getZ(), '02f')
-
+        debugmessage += " " + "\n"+"Magnification (z/x): " + format(self.eng.getZoom(),'02f')
+        debugmessage += " " + "\n"+"xTraversal (j/l): " + format(self.eng.getxTraversal(),'05d')
+        debugmessage += " " + "\n" + "yTraversal (i/k): " + format(self.eng.getyTraversal(), '05d')
 
         debug = Text(Point((-hostX/3),(hostY)/4),debugmessage)
         debug.draw(self.eng.pane)
