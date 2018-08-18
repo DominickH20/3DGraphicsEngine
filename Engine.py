@@ -77,8 +77,10 @@ class engine:
     def transform(self,p):
         pair = [] #x,y pair
         if(p.mag()==0):
-            pair.append(0)
-            pair.append(0)
+            x=0 + self.xTraversal
+            y=0 + self.yTraversal
+            pair.append(x)
+            pair.append(y)
             return pair
 
         val = dot(self.yRef,p)/(self.yRef.mag()*p.mag())
