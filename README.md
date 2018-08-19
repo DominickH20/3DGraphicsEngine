@@ -12,4 +12,4 @@ Use the `z`,`x` keys to zoom the camera in and out
 Use the `i`,`j`,`k`,`l` keys to traverse left, right, up, and down  
 
 Note that currently, only the start up visualizations have been implemented, however, users are free to develop and render their own objects
-in the meantime while a more sophisticated rendering system is implemented
+in the meantime while a more sophisticated rendering system is in development
