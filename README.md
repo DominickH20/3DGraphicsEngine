@@ -1,4 +1,12 @@
 # 3DGraphicsEngine
-This goal of this project is to produce a fully functional 3-dimensional graphics engine using a mathematical backbone of vector projection.
+This project implements a fully functional 3D graphics display methodology, built on the mathematics behind vector projection. Information
+on how this project works can be found in the MathematicalFoundation.pdf document. Currently, it's most robust capabilities allow for
+display of vector valued functions or Surfaces in R3. However, rigid shapes like cubes or lattices can be coded up for display as well.
 
-To use this project, run the EngineHost.py file. Note that at the moment, only one visualization can be viewed. More options will be added in the future.
+### Usage   
+To use this project, run the EngineHost.py file
+
+Use the 'w','a','s','d' keys to rotate the camera
+Press 'q' anytime to quit the program
+Use the 'z','x' keys to zoom the camera in and out
+Use the 'i','j','k','l' keys to traverse left, right, up, and down
