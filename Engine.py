@@ -6,19 +6,23 @@ class engine:
     #these must be initialized in constructor
     viewVector = vector(1,1,1)
     yRef = vector(0,0,1)
+
     zoom = 1
     xTraversal = 0
     yTraversal = 0
 
     def __init__(self, title, dim, fullscreen=False):
         self.pane = GraphWin(title, dim, dim, fullscreen)
-        self.pane.setCoords(-dim/2,-dim/2,dim/2,dim/2)
-        self.fullx = self.pane.winfo_screenwidth()
-        self.fully = self.pane.winfo_screenheight()
         self.yRef = self.project(self.yRef)
         self.title = title
+
+        self.xDist = dim
+        self.yDist = dim
+        self.pane.setCoords(-dim/2,-dim/2,dim/2,dim/2)
         if(fullscreen):
-            self.pane.setCoords((-self.fullx)/2,(-self.fully)/2,(self.fullx)/2,(self.fully)/2)
+            self.xDist = self.pane.winfo_screenwidth()
+            self.yDist = self.pane.winfo_screenheight()
+            self.pane.setCoords((-self.xDist)/2,(-self.yDist)/2,(self.xDist)/2,(self.yDist)/2)
 
     #accessors and mutators
     def getviewVector(self):

@@ -3,7 +3,6 @@ from math import *
 from ThreeSpace import *
 from WorldObjects import *
 import time
-import gc
 
 class engineHost:
     theta = pi/4
@@ -66,8 +65,6 @@ class engineHost:
 
     #handles value assignment when keys are pressed. T/F indicates when to break out of loop
     def handleKeys(self,key):
-        hostX = self.eng.fullx
-        hostY = self.eng.fully
         if (key == "q"):
             self.eng.pane.close()
             return True
@@ -119,11 +116,8 @@ class engineHost:
 
     #method to handle debug message view - ideally want to decrease number of vars in function
     def printDebug(self,fpsHandler):
-        hostX = self.eng.fullx
-        hostY = self.eng.fully
-        hostName = self.eng.title
         ######DEBUG#######
-        debugmessage = "Running" + " " + hostName + " "
+        debugmessage = "Running" + " " + self.eng.title + " "
         debugmessage += "(" + format(fpsHandler.getFPS(), '03f')+ " fps" + ")"
         debugmessage += " " + "\n"+"viewX: "+ format(self.eng.viewVector.getX(), '02f')
         debugmessage += " " + "\n"+"viewY: "+ format(self.eng.viewVector.getY(), '02f')
@@ -132,7 +126,7 @@ class engineHost:
         debugmessage += " " + "\n"+"xTraversal (j/l): " + format(self.eng.getxTraversal(),'05d')
         debugmessage += " " + "\n" + "yTraversal (i/k): " + format(self.eng.getyTraversal(), '05d')
 
-        debug = Text(Point((-hostX/3),(hostY)/4),debugmessage)
+        debug = Text(Point((-self.eng.xDist/3),(self.eng.yDist)/4),debugmessage)
         debug.draw(self.eng.pane)
 
 
@@ -149,12 +143,10 @@ class engineHost:
             self.eng.pane.delete("all")
             self.updateVector()
             self.render(fpsHandler.frame)
-            
+
             fpsHandler.update()
             self.printDebug(fpsHandler)
             update(120)
-
-
 
 
 class FPSHandler:
@@ -175,10 +167,9 @@ class FPSHandler:
         self.end = time.time()
         diff = self.end-self.start
         self.delta.append(diff)
-        if(self.frame == 10):
+        if(self.frame % 10 == 0):
             self.fps = 1/(sum(self.delta)/len(self.delta))
             self.delta = []
-            self.frame = 0
 
 def main():
     h = engineHost(pi/4,pi/4,engine("Host",800,True))
