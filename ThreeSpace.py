@@ -47,3 +47,6 @@ def scalarMult(a,k):
 
 def subtract(a,b):
     return add(a,scalarMult(b,-1))
+
+def normalize(a):
+    return scalarMult(a,1/(a.mag))
