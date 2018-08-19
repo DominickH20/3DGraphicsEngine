@@ -118,13 +118,13 @@ class engineHost:
                 self.renderAxes(obj.vertices)
 
     #method to handle debug message view - ideally want to decrease number of vars in function
-    def printDebug(self,fps):
+    def printDebug(self,fpsHandler):
         hostX = self.eng.fullx
         hostY = self.eng.fully
         hostName = self.eng.title
         ######DEBUG#######
         debugmessage = "Running" + " " + hostName + " "
-        debugmessage += "(" + format(fps, '03f')+ " fps" + ")"
+        debugmessage += "(" + format(fpsHandler.getFPS(), '03f')+ " fps" + ")"
         debugmessage += " " + "\n"+"viewX: "+ format(self.eng.viewVector.getX(), '02f')
         debugmessage += " " + "\n"+"viewY: "+ format(self.eng.viewVector.getY(), '02f')
         debugmessage += " " + "\n"+"viewZ: "+ format(self.eng.viewVector.getZ(), '02f')
@@ -139,29 +139,46 @@ class engineHost:
     #core loop that produces rendering and takes user input
     #want to remove local variables and handle fps better - this should be a clean function
     def run(self):
-        frame = 0
-        delta = []
-        fps = 0
-        zoom = 1
+        fpsHandler = FPSHandler()
 
         while True:
-            start = time.time()
+            fpsHandler.timeStamp()
             if(self.handleKeys(self.eng.pane.checkKey())):
                 break;
 
             self.eng.pane.delete("all")
             self.updateVector()
-            self.render(frame)
-            self.printDebug(fps)
+            self.render(fpsHandler.frame)
+            
+            fpsHandler.update()
+            self.printDebug(fpsHandler)
             update(120)
 
-            frame +=1
-            end = time.time()
-            diff = end-start
-            delta.append(diff)
-            if(frame % 10 ==0):
-                fps = 1/(sum(delta)/len(delta))
-                delta = []
+
+
+
+class FPSHandler:
+
+    def __init__(self):
+        self.frame = 0
+        self.delta=[]
+        self.fps = 0
+
+    def getFPS(self):
+        return self.fps
+
+    def timeStamp(self):
+        self.start = time.time()
+
+    def update(self):
+        self.frame +=1
+        self.end = time.time()
+        diff = self.end-self.start
+        self.delta.append(diff)
+        if(self.frame == 10):
+            self.fps = 1/(sum(self.delta)/len(self.delta))
+            self.delta = []
+            self.frame = 0
 
 def main():
     h = engineHost(pi/4,pi/4,engine("Host",800,True))
