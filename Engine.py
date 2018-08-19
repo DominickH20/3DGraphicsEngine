@@ -143,6 +143,10 @@ class engine:
         line = Line(Point(x1,y1),Point(x2,y2), color)
         line.draw(self.pane)
 
+    def drawPoly(self, coords, color = "purple"):
+        poly = Polygon([Point(0,0),Point(40,40),Point(0,-100)])
+        poly.draw(self.pane)
+
     #POOR PERFORMANCE - DO NOT USE
     #will draw the selected list of [2D] points onto the pane
     def illustrate(self,coords,color):

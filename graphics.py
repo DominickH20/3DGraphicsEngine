@@ -702,6 +702,8 @@ class Polygon(GraphicsObject):
             points = points[0]
         self.points = list(map(Point.clone, points))
         GraphicsObject.__init__(self, ["outline", "width", "fill"])
+        #self.setFill(color)
+        #self.setOutline("black")
 
     def __repr__(self):
         return "Polygon"+str(tuple(p for p in self.points))
