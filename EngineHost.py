@@ -95,24 +95,19 @@ class engineHost:
 
     #method to handle object rendering - ALL RENDERING MUST BE DONE HERE
     #ideally we want to remove frame as an input for this method
-    def render(self,frame):
-        a = axes(300)
-        l = lattice(400, -100)
-        h = helix(100, 0, 250, 20, 5, 10, "purple")
-        wc = wireCube(0,0,100,50, "brown")
-
-        ######OBJECT TRANSFORMATIONS IF ANY######
-        h.updateVertices(100, 0, 250, 20, int((frame/15))+1, 10, "purple")
-        ######RENDERING#######
+    def render(self):
         for obj in WorldObjects.getinstances():
-            if(isinstance(obj,lattice)):
-                self.renderLattice(obj.vertices)
-            if(isinstance(obj, wireCube)):
-                self.renderWireCube(obj.vertices, obj.color)
-            if (isinstance(obj, helix)):
-                self.renderHelix(obj.vertices, obj.color)
+            #if(isinstance(obj,lattice)):
+            #    self.renderLattice(obj.vertices)
+            #if(isinstance(obj, wireCube)):
+            #    self.renderWireCube(obj.vertices, obj.color)
+            #if (isinstance(obj, helix)):
+            #    self.renderHelix(obj.vertices, obj.color)
             if(isinstance(obj,axes)):
                 self.renderAxes(obj.vertices)
+                print("h")
+
+        print(WorldObjects.globalMesh)
 
         self.eng.drawPoly([Point(0,50), Point(50,50),Point(50,0), Point(0,0)],color_rgb(90,50,50))
         self.eng.drawPoly([Point(50, 0), Point(100, 0), Point(100, 50), Point(50, 50)], color_rgb(int(90*1.2), int(50*1.2), int(50*1.2)))
@@ -138,15 +133,16 @@ class engineHost:
     #want to remove local variables and handle fps better - this should be a clean function
     def run(self):
         fpsHandler = FPSHandler()
-
+        #####OBJECT INITIALIZATION ALWAYS HERE----DO NOT PUT IN RENDER####
+        a = axes(300)
+        p = flatPlane(200,"black")
         while True:
             fpsHandler.timeStamp()
             if(self.handleKeys(self.eng.pane.checkKey())):
                 break;
-
             self.eng.pane.delete("all")
             self.updateVector()
-            self.render(fpsHandler.frame)
+            self.render()
 
             fpsHandler.update()
             self.printDebug(fpsHandler)

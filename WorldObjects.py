@@ -18,10 +18,17 @@ class WorldObjects:
                 dead.add(ref)
         cls.instances -= dead
 
+    globalMesh = []
 
 class axes(WorldObjects):
     def __init__(self, size):
         WorldObjects.__init__(self,[[size,0,0],[0,size,0],[0,0,size],[0,0,0]]) #Offset from origin for projection
+
+class flatPlane(WorldObjects):
+    def __init__(self, size, color):
+        self.color = color
+        WorldObjects.__init__(self, [[size,size,0],[-size,size,0],[-size,-size,0],[size,-size,0]])
+        self.globalMesh.append([[size,size,0],[-size,size,0],[-size,-size,0],[size,-size,0], color])
 
 class lattice(WorldObjects):
     def __init__(self, size, zlevel):
