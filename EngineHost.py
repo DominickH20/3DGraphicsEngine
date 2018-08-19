@@ -114,7 +114,7 @@ class engineHost:
             if(isinstance(obj,axes)):
                 self.renderAxes(obj.vertices)
 
-        self.eng.drawPoly([],"black")
+        self.eng.drawPoly([Point(0,50), Point(50,50),Point(50,0), Point(0,0)],color_rgb(90,50,50))
         #self.eng.drawPoly([self.eng.pane.Point(0,0), Point(-10,20),Point(-30,500)])
 
     #method to handle debug message view - ideally want to decrease number of vars in function

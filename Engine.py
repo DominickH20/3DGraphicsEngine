@@ -144,7 +144,7 @@ class engine:
         line.draw(self.pane)
 
     def drawPoly(self, coords, color = "purple"):
-        poly = Polygon([Point(0,0),Point(40,40),Point(0,-100)])
+        poly = Polygon(coords, color)
         poly.draw(self.pane)
 
     #POOR PERFORMANCE - DO NOT USE
