@@ -6,7 +6,10 @@ display of vector valued functions or Surfaces in R3. However, rigid shapes like
 ### Usage   
 To use this project, run the EngineHost.py file
 
-Use the 'w','a','s','d' keys to rotate the camera
-Press 'q' anytime to quit the program
-Use the 'z','x' keys to zoom the camera in and out
-Use the 'i','j','k','l' keys to traverse left, right, up, and down
+Use the `w`,`a`,`s`,`d` keys to rotate the camera
+
+Press `q` anytime to quit the program
+
+Use the `z`,`x` keys to zoom the camera in and out
+
+Use the `i`,`j`,`k`,`l` keys to traverse left, right, up, and down
