@@ -33,7 +33,7 @@ class engineHost:
             y = point[1]
             z = point[2]
             #print((x*self.normViewVector().x+y*self.normViewVector().y+z*self.normViewVector().z+500))
-            score = (x*self.normViewVector().x+y*self.normViewVector().y+z*self.normViewVector().z+500)/self.normViewVector().mag()
+            score = (x*self.normViewVector().x+y*self.normViewVector().y+z*self.normViewVector().z+500)
             #print(score)
             depths.append(int(score))
             #depths.append((x*int(self.normViewVector().x)+y*int(self.normViewVector().y)+z*int(self.normViewVector().z)+500)/7)
@@ -47,7 +47,7 @@ class engineHost:
         normal = cross(v1,v2)
         unitnorm = normalize(normal)
         dotted = dot(light,unitnorm)
-        return int(20*dotted)
+        return int(20*dotted) #temporary
 
 
     #retrieves appropriate drawing coordinates from a specified point in R3
@@ -185,10 +185,8 @@ class engineHost:
         #####OBJECT INITIALIZATION ALWAYS HERE----DO NOT PUT IN RENDER####
         a = axes(300)
         #p = flatPlane(200, -70, "white")
-        #b = flatPlane(200, -120, "grey")
-        #c = flatPlane(200, -170, "black")
-        #d = flatPlane(500, -220, "purple")
         cub = cube(100, 0,0,40, color_rgb(127,127,127))
+        other = cube(50,-300,70,90, color_rgb(127,127,127))
         while True:
             fpsHandler.timeStamp()
             if(self.handleKeys(self.eng.pane.checkKey())):
