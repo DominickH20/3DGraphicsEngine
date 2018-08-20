@@ -3,6 +3,7 @@ from math import *
 from ThreeSpace import *
 from WorldObjects import *
 import time
+import copy
 
 class engineHost:
     theta = pi/4
@@ -18,6 +19,25 @@ class engineHost:
     def updateVector(self):
         self.eng.setViewVector(vector(cos(self.theta),sin(self.theta),sin(self.phi)))
         self.eng.setyRef(vector(0,0,1)) #no use yet - revolution is not implemented
+
+    #depth score calculations
+    def normViewVector(self):
+        return normalize(self.eng.getviewVector())
+
+    def avgdepth(self, coords):
+        depths = []
+        #print(coords)
+        for point in coords:
+            #dist to cam plane
+            x = point[0]
+            y = point[1]
+            z = point[2]
+            #print((x*self.normViewVector().x+y*self.normViewVector().y+z*self.normViewVector().z+500))
+            score = (x*self.normViewVector().x+y*self.normViewVector().y+z*self.normViewVector().z+500)/self.normViewVector().mag()
+            #print(score)
+            depths.append(int(score))
+            #depths.append((x*int(self.normViewVector().x)+y*int(self.normViewVector().y)+z*int(self.normViewVector().z)+500)/7)
+        return sum(depths)/len(depths)
 
     #retrieves appropriate drawing coordinates from a specified point in R3
     def getPoint(self, point):
@@ -94,8 +114,23 @@ class engineHost:
             return False
 
     #method to handle object rendering - ALL RENDERING MUST BE DONE HERE
-    #ideally we want to remove frame as an input for this method
     def render(self):
+        renderMesh = copy.deepcopy(WorldObjects.globalMesh) #deepcopy to preserve globalMesh
+        for polygon in renderMesh:
+            polygon.append(self.avgdepth(polygon[0]))
+        #sort by depth score
+        renderMesh = sorted(renderMesh, key = lambda x: x[-1], reverse = False)
+        #draw globalmesh
+        for polygon in renderMesh:
+            r2points = []
+            for r3point in polygon[0]:
+                r2points.append(self.getPoint(r3point))
+            r2pointsfinal = []
+            for pair in r2points:
+                r2pointsfinal.append(Point(pair[0],pair[1]))
+            print(r2pointsfinal)
+            self.eng.drawPoly(r2pointsfinal, polygon[1])
+        #draw axes
         for obj in WorldObjects.getinstances():
             #if(isinstance(obj,lattice)):
             #    self.renderLattice(obj.vertices)
@@ -105,12 +140,9 @@ class engineHost:
             #    self.renderHelix(obj.vertices, obj.color)
             if(isinstance(obj,axes)):
                 self.renderAxes(obj.vertices)
-                print("h")
-
-        print(WorldObjects.globalMesh)
-
-        self.eng.drawPoly([Point(0,50), Point(50,50),Point(50,0), Point(0,0)],color_rgb(90,50,50))
-        self.eng.drawPoly([Point(50, 0), Point(100, 0), Point(100, 50), Point(50, 50)], color_rgb(int(90*1.2), int(50*1.2), int(50*1.2)))
+        #print(renderMesh)
+        #self.eng.drawPoly([Point(0,50), Point(50,50),Point(50,0), Point(0,0)],color_rgb(90,50,50))
+        #self.eng.drawPoly([Point(50, 0), Point(100, 0), Point(100, 50), Point(50, 50)], color_rgb(int(90*1.2), int(50*1.2), int(50*1.2)))
         #self.eng.drawPoly([self.eng.pane.Point(0,0), Point(-10,20),Point(-30,500)])
 
     #method to handle debug message view - ideally want to decrease number of vars in function
@@ -121,6 +153,7 @@ class engineHost:
         debugmessage += " " + "\n"+"viewX: "+ format(self.eng.viewVector.getX(), '02f')
         debugmessage += " " + "\n"+"viewY: "+ format(self.eng.viewVector.getY(), '02f')
         debugmessage += " " + "\n"+"viewZ: "+ format(self.eng.viewVector.getZ(), '02f')
+        #debugmessage += " " + "\n"+"normViewVector: " + str(self.normViewVector())
         debugmessage += " " + "\n"+"Magnification (z/x): " + format(self.eng.getZoom(),'02f')
         debugmessage += " " + "\n"+"xTraversal (j/l): " + format(self.eng.getxTraversal(),'05d')
         debugmessage += " " + "\n" + "yTraversal (i/k): " + format(self.eng.getyTraversal(), '05d')
@@ -135,7 +168,10 @@ class engineHost:
         fpsHandler = FPSHandler()
         #####OBJECT INITIALIZATION ALWAYS HERE----DO NOT PUT IN RENDER####
         a = axes(300)
-        p = flatPlane(200,"black")
+        p = flatPlane(200, -70, "white")
+        b = flatPlane(200, -120, "grey")
+        c = flatPlane(200, -170, "black")
+        d = flatPlane(500, -220, "purple")
         while True:
             fpsHandler.timeStamp()
             if(self.handleKeys(self.eng.pane.checkKey())):
@@ -143,10 +179,10 @@ class engineHost:
             self.eng.pane.delete("all")
             self.updateVector()
             self.render()
-
             fpsHandler.update()
             self.printDebug(fpsHandler)
             update(120)
+            #print(self.normViewVector())
 
 
 class FPSHandler:

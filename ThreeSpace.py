@@ -49,4 +49,4 @@ def subtract(a,b):
     return add(a,scalarMult(b,-1))
 
 def normalize(a):
-    return scalarMult(a,1/(a.mag))
+    return vector(a.x/a.mag(),a.y/a.mag(),a.z/a.mag())
