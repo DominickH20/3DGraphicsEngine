@@ -45,6 +45,33 @@ class cube(WorldObjects):
         self.globalMesh.append([[[a1,a2,a3],[a1-size,a2,a3],[a1-size,a2-size,a3],[a1,a2-size,a3]],color])
         self.globalMesh.append([[[a1,a2,a3-size],[a1,a2-size,a3-size],[a1-size,a2-size,a3-size],[a1-size,a2,a3-size]],color])
 
+class surface(WorldObjects):
+    def __init__(self,size, increment, color):
+        self.color = color
+        for x in range(-size-increment,size,increment):
+            for y in range(-size-increment,size,increment):
+                self.globalMesh.append([[[x,y,(x^2+y^2)/30],[x-increment,y,((x-increment)^2+y^2)/30],[x-increment,y-increment,((x-increment)^2+(y-increment)^2)/30],[x,y-increment,(x^2+(y-increment)^2)/30]],color])
+
+        """
+        vertices = [[[] for i in range(-size,size)] for i in range(-size,size)]
+        #print(vertices)
+        vertices[0][0]=[1]
+        masterlist = []
+        for x in range(-size,size):
+            for y in range(-size,size):
+                vertices[x][y]=[sin(x*y/300)]
+                masterlist.append([x,y,vertices[x][y][0]])
+        WorldObjects.__init__(self, masterlist)
+        print(masterlist)
+        #self.globalMesh.append([[[0,0,vertices[0][0][0]],[0,1,vertices[0][1][0]],[1,0,vertices[1][0][0]]],color])
+        #self.globalMesh.append([[[0,0,0],[0,300,300],[-20,20,40]],color])
+        for x in range(-size+1,size-1):
+            for y in range(-size+1,size-1):
+                self.globalMesh.append([[[x,y,vertices[x][y][0]],[x-1,y,vertices[x-1][y][0]],[x-1,y-1,vertices[x-1][y-1][0]],[x,y-1,vertices[x][y-1][0]]],color])
+        """
+
+
+
 class lattice(WorldObjects):
     def __init__(self, size, zlevel):
         WorldObjects.__init__(self,[[size, size, zlevel],[-size, size, zlevel],[-size, -size, zlevel],[size, -size, zlevel]])
