@@ -39,6 +39,17 @@ class engineHost:
             #depths.append((x*int(self.normViewVector().x)+y*int(self.normViewVector().y)+z*int(self.normViewVector().z)+500)/7)
         return sum(depths)/len(depths)
 
+    #lightingscorecalculations
+    def getlightFactor(self,p1,p2,p3):
+        light = vector(0.282,0.929,0.236)
+        v1 = vector(p2[0]-p1[0],p2[1]-p1[1],p2[2]-p1[2])
+        v2 = vector(p3[0] - p2[0], p3[1] - p2[1], p3[2] - p2[2])
+        normal = cross(v1,v2)
+        unitnorm = normalize(normal)
+        dotted = dot(light,unitnorm)
+        return int(20*dotted)
+
+
     #retrieves appropriate drawing coordinates from a specified point in R3
     def getPoint(self, point):
         v = vector(point[0],point[1],point[2])
@@ -128,8 +139,13 @@ class engineHost:
             r2pointsfinal = []
             for pair in r2points:
                 r2pointsfinal.append(Point(pair[0],pair[1]))
-            #print(r2pointsfinal)
-            self.eng.drawPoly(r2pointsfinal, polygon[1])
+            #grayscale shading
+            if(polygon[1]==color_rgb(127,127,127)):
+                lightFactor = self.getlightFactor(polygon[0][0],polygon[0][1],polygon[0][2])
+                shade = color_rgb(127+lightFactor,127+lightFactor,127+lightFactor)
+                self.eng.drawPoly(r2pointsfinal,shade)
+            else:
+                self.eng.drawPoly(r2pointsfinal, polygon[1])
         #draw axes
         for obj in WorldObjects.getinstances():
             #if(isinstance(obj,lattice)):
@@ -168,11 +184,11 @@ class engineHost:
         fpsHandler = FPSHandler()
         #####OBJECT INITIALIZATION ALWAYS HERE----DO NOT PUT IN RENDER####
         a = axes(300)
-        p = flatPlane(200, -70, "white")
-        b = flatPlane(200, -120, "grey")
-        c = flatPlane(200, -170, "black")
+        #p = flatPlane(200, -70, "white")
+        #b = flatPlane(200, -120, "grey")
+        #c = flatPlane(200, -170, "black")
         #d = flatPlane(500, -220, "purple")
-        cub = cube(100, 0,0,40, "purple")
+        cub = cube(100, 0,0,40, color_rgb(127,127,127))
         while True:
             fpsHandler.timeStamp()
             if(self.handleKeys(self.eng.pane.checkKey())):
