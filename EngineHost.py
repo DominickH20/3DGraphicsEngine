@@ -128,7 +128,7 @@ class engineHost:
             r2pointsfinal = []
             for pair in r2points:
                 r2pointsfinal.append(Point(pair[0],pair[1]))
-            print(r2pointsfinal)
+            #print(r2pointsfinal)
             self.eng.drawPoly(r2pointsfinal, polygon[1])
         #draw axes
         for obj in WorldObjects.getinstances():
@@ -171,7 +171,8 @@ class engineHost:
         p = flatPlane(200, -70, "white")
         b = flatPlane(200, -120, "grey")
         c = flatPlane(200, -170, "black")
-        d = flatPlane(500, -220, "purple")
+        #d = flatPlane(500, -220, "purple")
+        cub = cube(100, 0,0,40, "purple")
         while True:
             fpsHandler.timeStamp()
             if(self.handleKeys(self.eng.pane.checkKey())):

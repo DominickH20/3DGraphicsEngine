@@ -30,6 +30,21 @@ class flatPlane(WorldObjects):
         WorldObjects.__init__(self, [[size,size,z],[-size,size,z],[-size,-size,z],[size,-size,z]])
         self.globalMesh.append([[[size,size,z],[-size,size,z],[-size,-size,z],[size,-size,z]], color])
 
+class cube(WorldObjects):
+    def __init__(self,size, c1, c2, c3, color):
+        self.color = color
+        a1 = c1+int(size/2)
+        a2 = c2 + int(size / 2)
+        a3 = c3 + int(size / 2)
+        WorldObjects.__init__(self, [[a1,a2,a3],[a1,a2-size,a3],[a1,a2-size,a3-size],[a1,a2,a3-size],[a1-size,a2,a3],[a1-size,a2-size,a3],[a1-size,a2-size,a3-size],[a1-size,a2,a3-size]])
+        #build meshes by listing vertices ccw (from exterior)
+        self.globalMesh.append([[[a1,a2,a3],[a1,a2-size,a3],[a1,a2-size,a3-size],[a1,a2,a3-size]], color])
+        self.globalMesh.append([[[a1,a2,a3],[a1,a2,a3-size],[a1-size,a2,a3-size],[a1-size,a2,a3]],color])
+        self.globalMesh.append([[[a1-size,a2,a3],[a1-size,a2,a3-size],[a1-size,a2-size,a3-size],[a1-size,a2-size,a3]],color])
+        self.globalMesh.append([[[a1-size,a2-size,a3],[a1-size,a2-size,a3-size],[a1,a2-size,a3-size],[a1,a2-size,a3]],color])
+        self.globalMesh.append([[[a1,a2,a3],[a1-size,a2,a3],[a1-size,a2-size,a3],[a1,a2-size,a3]],color])
+        self.globalMesh.append([[[a1,a2,a3-size],[a1,a2-size,a3-size],[a1-size,a2-size,a3-size],[a1-size,a2,a3-size]],color])
+
 class lattice(WorldObjects):
     def __init__(self, size, zlevel):
         WorldObjects.__init__(self,[[size, size, zlevel],[-size, size, zlevel],[-size, -size, zlevel],[size, -size, zlevel]])
