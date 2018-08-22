@@ -47,7 +47,7 @@ class engineHost:
         normal = cross(v1,v2)
         unitnorm = normalize(normal)
         dotted = dot(light,unitnorm)
-        return int(20*dotted) #temporary
+        return int(50*dotted) #temporary
 
 
     #retrieves appropriate drawing coordinates from a specified point in R3
@@ -185,8 +185,9 @@ class engineHost:
         #####OBJECT INITIALIZATION ALWAYS HERE----DO NOT PUT IN RENDER####
         a = axes(300)
         #p = flatPlane(200, -70, "white")
-        cub = cube(100, 0,0,40, color_rgb(127,127,127))
-        other = cube(50,-300,70,90, color_rgb(127,127,127))
+        #cub = cube(100, 0,0,40, color_rgb(127,127,127))
+        #other = cube(50,-300,70,90, color_rgb(127,127,127))
+        s = surface(200, 20, color_rgb(127,127,127))
         while True:
             fpsHandler.timeStamp()
             if(self.handleKeys(self.eng.pane.checkKey())):
