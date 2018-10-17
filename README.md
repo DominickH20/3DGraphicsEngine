@@ -1,6 +1,6 @@
 # 3DGraphicsEngine
 This project implements a fully functional 3D graphics display methodology, built on the mathematics behind vector projection. Information
-on how this project works can be found in the MathematicalFoundation.pdf document. Currently, it's most robust capabilities allow for
+on how this project works can be found in the MathematicalFoundation.pdf document. Currently, its most robust capabilities allow for
 display of vector valued functions or Surfaces in R3. However, rigid shapes like cubes or lattices can be coded up for display as well.
 
 ### Usage   
